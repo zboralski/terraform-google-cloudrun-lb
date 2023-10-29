@@ -55,6 +55,7 @@ module "cloudrun_lb" {
   service                       = "your-cloud-run-service-name"
   authorized_ip_ranges          = ["1.2.3.4/32", "5.6.7.8/32"]
   managed_ssl_certificate_domains = ["your-custom-domain.com"]
+  use_ssl = true
 }
 ```
 

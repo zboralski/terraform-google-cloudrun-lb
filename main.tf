@@ -11,9 +11,9 @@ module "service-loadbalancer" {
   create_address = false
 
   # Enable SSL and use the specified domains for Google-managed SSL certificates
-  ssl                             = true
+  ssl                             = var.use_ssl
   managed_ssl_certificate_domains = var.managed_ssl_certificate_domains
-  https_redirect                  = true
+  https_redirect                  = var.use_ssl
 
   backends = {
     default = {

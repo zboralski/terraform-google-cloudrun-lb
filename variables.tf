@@ -43,3 +43,8 @@ variable "logging_sample_rate" {
   type        = number
   default     = 1.0
 }
+variable "use_ssl" {
+  description = "Use TLS"
+  type    = bool
+  default = true
+}

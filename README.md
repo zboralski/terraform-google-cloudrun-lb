@@ -49,13 +49,13 @@ To use the module, include it in your Terraform configuration and provide the ne
 module "cloudrun_lb" {
   source = "path/to/terraform-google-cloudrun-lb"
 
-  name                          = "your-load-balancer-name"
-  project                       = "your-gcp-project-id"
-  location                      = "your-gcp-region"
-  service                       = "your-cloud-run-service-name"
-  authorized_ip_ranges          = ["1.2.3.4/32", "5.6.7.8/32"]
+  name                            = "your-load-balancer-name"
+  project                         = "your-gcp-project-id"
+  location                        = "your-gcp-region"
+  service                         = "your-cloud-run-service-name"
+  authorized_ip_ranges            = ["1.2.3.4/32", "5.6.7.8/32"]
   managed_ssl_certificate_domains = ["your-custom-domain.com"]
-  use_ssl = true
+  use_ssl                         = true
 }
 ```
 

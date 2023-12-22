@@ -27,6 +27,12 @@ variable "managed_ssl_certificate_domains" {
   default     = []
 }
 
+variable "ssl_certificate_id" {
+  description = "The ID of the self-managed SSL certificate."
+  type        = string
+  default     = ""
+}
+
 variable "service" {
   description = "Cloud Run service name."
   type        = string

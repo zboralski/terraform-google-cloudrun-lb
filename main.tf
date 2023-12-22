@@ -1,4 +1,4 @@
-# main.tf is used to define the module and pass in the variables.
+# main.tf
 
 module "service-loadbalancer" {
   source  = "GoogleCloudPlatform/lb-http/google//modules/serverless_negs"
@@ -10,10 +10,20 @@ module "service-loadbalancer" {
   address        = google_compute_global_address.service-lb-ip.address
   create_address = false
 
-  # Enable SSL and use the specified domains for Google-managed SSL certificates
-  ssl                             = var.use_ssl
-  managed_ssl_certificate_domains = var.managed_ssl_certificate_domains
-  https_redirect                  = var.use_ssl
+  # Conditional SSL configuration
+  ssl = var.use_ssl
+  https_redirect = var.use_ssl
+
+  # Use Google-managed SSL certificates if domains are provided, otherwise use custom SSL certificate
+  dynamic "ssl_policy" {
+    for_each = length(var.managed_ssl_certificate_domains) > 0 ? [1] : []
+    content {
+      managed_ssl_certificate_domains = var.managed_ssl_certificate_domains
+    }
+  }
+
+  # Reference to the custom SSL certificate (assuming the certificate is managed outside this module)
+  ssl_certificates = length(var.managed_ssl_certificate_domains) == 0 && var.use_ssl ? [var.ssl_certificate_id] : []
 
   backends = {
     default = {

@@ -55,6 +55,7 @@ module "cloudrun_lb" {
   service                         = "your-cloud-run-service-name"
   authorized_ip_ranges            = ["1.2.3.4/32", "5.6.7.8/32"]
   managed_ssl_certificate_domains = ["your-custom-domain.com"]
+  ssl_certificate_id              = "your-custom-ssl-certificate-id"
   use_ssl                         = true
 }
 ```
@@ -70,6 +71,7 @@ module "cloudrun_lb" {
 | service | Cloud Run service name. | string | | yes |
 | authorized_ip_ranges | List of authorized IP ranges. | list(string) | `["0.0.0.0/0"]` | no |
 | managed_ssl_certificate_domains | List of domains for managed SSL certificate. | list(string) | `[]` | no |
+| ssl_certificate_id | ID of the custom SSL certificate. Required if using custom SSL. | string | "" | no |
 | logging_enabled | Whether to enable logging for the load balancer. | bool | `true` | no |
 | logging_sample_rate | The percentage of requests to be logged, as a value between 0.0 and 1.0. | number | `1.0` | no |
 

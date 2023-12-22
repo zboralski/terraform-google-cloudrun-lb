@@ -10,20 +10,13 @@ module "service-loadbalancer" {
   address        = google_compute_global_address.service-lb-ip.address
   create_address = false
 
-  # Conditional SSL configuration
-  ssl = var.use_ssl
+  # Enable SSL
+  ssl            = var.use_ssl
   https_redirect = var.use_ssl
 
-  # Use Google-managed SSL certificates if domains are provided, otherwise use custom SSL certificate
-  dynamic "ssl_policy" {
-    for_each = length(var.managed_ssl_certificate_domains) > 0 ? [1] : []
-    content {
-      managed_ssl_certificate_domains = var.managed_ssl_certificate_domains
-    }
-  }
-
-  # Reference to the custom SSL certificate (assuming the certificate is managed outside this module)
-  ssl_certificates = length(var.managed_ssl_certificate_domains) == 0 && var.use_ssl ? [var.ssl_certificate_id] : []
+  # Conditionally use Google-managed SSL certificates or custom SSL certificate
+  managed_ssl_certificate_domains = var.use_ssl && length(var.managed_ssl_certificate_domains) > 0 ? var.managed_ssl_certificate_domains : []
+  ssl_certificates = var.use_ssl && length(var.managed_ssl_certificate_domains) == 0 ? [var.ssl_certificate_id] : []
 
   backends = {
     default = {
